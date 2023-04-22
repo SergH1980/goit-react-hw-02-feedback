@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
-import { FeedbackOptions } from '../FeedbackButtons/FeedbackOptions';
-// import { Statistics } from '../Statistics/Statistics';
+
+import { FeedbackOptions } from '../FeedbackOptions/FeedbackOptions';
+import { Statistics } from '../Statistics/Statistics';
+import { Section } from 'components/Section/Section';
+
+import { AppStyle } from './App.styled';
+import { GlobalStyle } from '../GlobalStyle';
 
 export class App extends Component {
   state = {
@@ -24,35 +29,33 @@ export class App extends Component {
   };
 
   countPositiveFeedbackPercentage = () => {
-    const { good, neutral, bad } = this.state;
+    const { good } = this.state;
     return Math.round((good / this.countTotalFeedback(this.state)) * 100);
   };
-
   render() {
     const { good, neutral, bad } = this.state;
 
     return (
-      <div>
-        <p>Please leave feedback</p>
-        <FeedbackOptions
-          options={Object.keys(this.state)}
-          onLeaveFeedback={this.onLeaveFeedback}
-        />
-        <p>Statistics</p>
-        <div>
-          <p>Good: {good}</p>
-          <p>Neutral: {neutral}</p>
-          <p>Bad: {bad}</p>
-          <p>Total: {this.countTotalFeedback()}</p>
-          <p>
-            Positive feedback:{' '}
-            {this.countPositiveFeedbackPercentage() > 0
-              ? this.countPositiveFeedbackPercentage()
-              : 0}
-            %
-          </p>
-        </div>
-      </div>
+      <AppStyle>
+        <Section title="Please leave feedback">
+          <FeedbackOptions
+            options={Object.keys(this.state)}
+            onLeaveFeedback={this.onLeaveFeedback}
+          />
+        </Section>
+        <Section title="Statistics">
+          <Statistics
+            good={good}
+            neutral={neutral}
+            bad={bad}
+            total={this.countTotalFeedback(this.state)}
+            positivePercentage={this.countPositiveFeedbackPercentage(
+              this.state
+            )}
+          />
+        </Section>
+        <GlobalStyle />
+      </AppStyle>
     );
   }
 }

@@ -7,8 +7,14 @@ export class FeedbackOptions extends Component {
     onLeaveFeedback: PropTypes.func.isRequired,
     options: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   };
+
+  onClickFeedback = event => {
+    const parameter = event.currentTarget.name;
+    this.props.onLeaveFeedback(parameter);
+  };
+
   render() {
-    const { options, onLeaveFeedback } = this.props;
+    const { options } = this.props;
 
     return (
       <ButtonList>
@@ -17,7 +23,7 @@ export class FeedbackOptions extends Component {
             <li key={option}>
               <ButtonStyle
                 name={option}
-                onClick={onLeaveFeedback}
+                onClick={this.onClickFeedback}
                 type="button"
               >
                 {option}

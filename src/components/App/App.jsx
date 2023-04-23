@@ -14,11 +14,10 @@ export class App extends Component {
     bad: 0,
   };
 
-  onLeaveFeedback = event => {
-    const parameter = event.currentTarget.name;
+  handleFeedback = data => {
     this.setState(prevState => {
       return {
-        [parameter]: prevState[parameter] + 1,
+        [data]: prevState[data] + 1,
       };
     });
   };
@@ -40,7 +39,7 @@ export class App extends Component {
         <Section title="Please leave feedback">
           <FeedbackOptions
             options={Object.keys(this.state)}
-            onLeaveFeedback={this.onLeaveFeedback}
+            onLeaveFeedback={this.handleFeedback}
           />
         </Section>
         <Section title="Statistics">
